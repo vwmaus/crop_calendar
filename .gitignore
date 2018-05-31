@@ -27,5 +27,5 @@ vignettes/*.pdf
 rsconnect/
 .Rproj.user
 # Other files
-/output
 *.qgs~
+

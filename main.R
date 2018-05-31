@@ -35,17 +35,10 @@ mt_spatiotemporal_soybean <- readODS::read_ods("./input/planting_dates_mt_brazil
   dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
   dplyr::mutate(label = "Soybean", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
-  sf::st_as_sf() %>% 
+  sf::st_as_sf()  %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_soybean
-mt_spatiotemporal_soybean %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create cotton spatiotemporal caledar 
 mt_spatiotemporal_cotton <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "cotton", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
@@ -58,15 +51,8 @@ mt_spatiotemporal_cotton <- readODS::read_ods("./input/planting_dates_mt_brazil.
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_cotton
-mt_spatiotemporal_cotton %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create maize first crop spatiotemporal caledar 
 mt_spatiotemporal_maize_1st <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_1st_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
@@ -77,15 +63,8 @@ mt_spatiotemporal_maize_1st <- readODS::read_ods("./input/planting_dates_mt_braz
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_maize_1st
-mt_spatiotemporal_maize_1st %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create maize second crop spatiotemporal caledar 
 mt_spatiotemporal_maize_2nd <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_2nd_crop", col_names = TRUE, skip = 1, range = c("A1:A142")) %>% 
@@ -95,15 +74,8 @@ mt_spatiotemporal_maize_2nd <- readODS::read_ods("./input/planting_dates_mt_braz
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_maize_2nd
-mt_spatiotemporal_maize_2nd %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create maize second pasture spatiotemporal caledar 
 mt_spatiotemporal_maize_pasture <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "Corn_2nd_pasture", col_names = TRUE, range = c("A1:A141")) %>% 
@@ -113,15 +85,8 @@ mt_spatiotemporal_maize_pasture <- readODS::read_ods("./input/planting_dates_mt_
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_maize_pasture
-mt_spatiotemporal_maize_pasture %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create beans first crop spatiotemporal caledar 
 mt_spatiotemporal_beans_1st <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "beans_1st_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
@@ -134,15 +99,8 @@ mt_spatiotemporal_beans_1st <- readODS::read_ods("./input/planting_dates_mt_braz
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
-  dplyr::ungroup()
-
-mt_spatiotemporal_beans_1st
-mt_spatiotemporal_beans_1st %>% 
-  plot()
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
 
 # Create beans second crop spatiotemporal caledar 
 mt_spatiotemporal_beans_2nd <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "beans_2nd_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
@@ -155,24 +113,38 @@ mt_spatiotemporal_beans_2nd <- readODS::read_ods("./input/planting_dates_mt_braz
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
   sf::st_as_sf() %>% 
   dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
+  sf::st_set_precision(10000) %>% 
+  lwgeom::st_make_valid()  
+
+# Join calendars to one spatiotemporal object and group by label, starting month, and ending month
+mt_spatiotemporal_calendar <- rbind(mt_spatiotemporal_soybean, 
+      mt_spatiotemporal_cotton,
+      mt_spatiotemporal_maize_1st,
+      mt_spatiotemporal_maize_2nd,
+      mt_spatiotemporal_maize_pasture,
+      mt_spatiotemporal_beans_1st,
+      mt_spatiotemporal_beans_2nd) %>% 
+  sf::st_set_precision(10000) %>% 
   lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise(label = unique(label)) %>% 
+  dplyr::mutate(month_start = as.integer(lubridate::month(start)), 
+                month_end   = as.integer(lubridate::month(end))) %>% 
+  dplyr::group_by(label, month_start, month_end) %>% 
+  dplyr::summarise() %>% 
   dplyr::ungroup()
 
-mt_spatiotemporal_beans_2nd
-mt_spatiotemporal_beans_2nd %>% 
-  plot()
+# Save results to file 
+sf::write_sf(mt_spatiotemporal_calendar, dsn = "./output/mt_spatiotemporal_calendar.geojson", driver = "GeoJSON", delete_dsn = TRUE)
 
+# Plot starting months by crop type 
+gp <- mt_spatiotemporal_calendar %>% 
+  dplyr::mutate(group = stringr::str_c(month.abb[month_start], "-", month.abb[month_end])) %>% 
+  ggplot2::ggplot(aes(group = label, fill = group)) +
+  ggplot2::facet_wrap(~label, nrow = 2) +
+  ggplot2::geom_sf(size = 0.1) +
+  ggplot2::theme(legend.position = "bottom")
 
-# Join calendars to one spatiotemporal object
-mt_spatiotemporal_soybean
-mt_spatiotemporal_cotton
-mt_spatiotemporal_maize_1st
-mt_spatiotemporal_maize_2nd
-mt_spatiotemporal_maize_pasture
-mt_spatiotemporal_beans_1st
-mt_spatiotemporal_beans_2nd
+gp
 
+ggsave(filename = "./output/mt_spatiotemporal_calendar.png", plot = gp, device = "png", 
+       scale = 1, width = 8, height = 5, dpi = 300)
 
