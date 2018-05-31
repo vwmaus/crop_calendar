@@ -46,31 +46,12 @@ mt_soybean_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", 
 mt_soybean_caledar %>% 
   plot()
 
-# Create maize first crop spatiotemporal caledar 
-mt_corn_1_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_1st_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
-  tibble::as_tibble() %>% 
-  dplyr::filter(Cod_Munic != "Total Result") %>% 
-  dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
-  dplyr::mutate(label = "Soybean", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
-  dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
-  sf::st_as_sf() %>% 
-  dplyr::select(label, start, end) %>% 
-  st_set_precision(1000) %>% 
-  lwgeom::st_make_valid() %>% 
-  dplyr::group_by(start, end) %>% 
-  dplyr::summarise() %>% 
-  dplyr::ungroup()
-
-mt_corn_1_caledar %>% 
-  plot()
-
-
 # Create cotton spatiotemporal caledar 
 mt_cotton_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "cotton", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
   tibble::as_tibble() %>% 
   dplyr::filter(Cod_Munic != "Total Result") %>% 
   dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
-  dplyr::mutate(label = "Soybean", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::mutate(label = "Cotton", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
   dplyr::right_join(mu_concordance, by = c("NM_MUNICIP" = "name_1")) %>% 
   dplyr::mutate(NM_MUNICIP = stringr::str_to_upper(ibge)) %>%
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
@@ -85,12 +66,48 @@ mt_cotton_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", s
 mt_cotton_caledar %>% 
   plot()
 
+# Create maize first crop spatiotemporal caledar 
+mt_maize_1_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_1st_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
+  tibble::as_tibble() %>% 
+  dplyr::filter(Cod_Munic != "Total Result") %>% 
+  dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
+  dplyr::mutate(label = "Maize 1st crop", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
+  sf::st_as_sf() %>% 
+  dplyr::select(label, start, end) %>% 
+  st_set_precision(1000) %>% 
+  lwgeom::st_make_valid() %>% 
+  dplyr::group_by(start, end) %>% 
+  dplyr::summarise() %>% 
+  dplyr::ungroup()
+
+mt_maize_1_caledar %>% 
+  plot()
+
+# Create maize second crop spatiotemporal caledar 
+mt_maize_2_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_2nd_crop", col_names = TRUE, skip = 1, range = c("A1:A142")) %>% 
+  tibble::tibble(Nome_Municipio = .) %>%
+  dplyr::bind_cols(readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "corn_2nd_crop", col_names = TRUE, skip = 1, range = c("D1:E142"))) %>% 
+  dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), label = "Maize 2nd crop", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
+  sf::st_as_sf() %>% 
+  dplyr::select(label, start, end) %>% 
+  st_set_precision(1000) %>% 
+  lwgeom::st_make_valid() %>% 
+  dplyr::group_by(start, end) %>% 
+  dplyr::summarise() %>% 
+  dplyr::ungroup()
+
+mt_maize_2_caledar %>% 
+  plot()
+
+
 # Create beans first crop spatiotemporal caledar 
 mt_beans_1_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "beans_1st_crop", col_names = TRUE, skip = 1, range = "A1:D141") %>% 
   tibble::as_tibble() %>% 
   dplyr::filter(Cod_Munic != "Total Result") %>% 
   dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
-  dplyr::mutate(label = "Soybean", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::mutate(label = "Beans 1st crop", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
   dplyr::right_join(mu_concordance, by = c("NM_MUNICIP" = "name_1")) %>% 
   dplyr::mutate(NM_MUNICIP = stringr::str_to_upper(ibge)) %>%
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
@@ -110,7 +127,7 @@ mt_beans_2_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", 
   tibble::as_tibble() %>% 
   dplyr::filter(Cod_Munic != "Total Result") %>% 
   dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), start = `Min - start_date`, end = `Max - end_date`) %>% 
-  dplyr::mutate(label = "Soybean", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::mutate(label = "Beans 2nd crop", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
   dplyr::right_join(mu_concordance, by = c("NM_MUNICIP" = "name_1")) %>% 
   dplyr::mutate(NM_MUNICIP = stringr::str_to_upper(ibge)) %>%
   dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
@@ -123,5 +140,23 @@ mt_beans_2_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", 
   dplyr::ungroup()
 
 mt_beans_2_caledar %>% 
+  plot()
+
+
+# Create maize second pasture spatiotemporal caledar 
+mt_maize_pasture_caledar <- readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "Corn_2nd_pasture", col_names = TRUE, range = c("A1:A141")) %>% 
+  tibble::tibble(Nome_Municipio = .) %>%
+  dplyr::bind_cols(readODS::read_ods("./input/planting_dates_mt_brazil.ods", sheet = "Corn_2nd_pasture", col_names = TRUE, range = c("D1:E141"))) %>% 
+  dplyr::transmute(NM_MUNICIP = stringr::str_to_upper(Nome_Municipio), label = "Maize 2nd pasture", start = lubridate::mdy(start), end = lubridate::mdy(end)) %>% 
+  dplyr::right_join(mt_mu, by = c("NM_MUNICIP" = "NM_MUNICIP")) %>% 
+  sf::st_as_sf() %>% 
+  dplyr::select(label, start, end) %>% 
+  st_set_precision(1000) %>% 
+  lwgeom::st_make_valid() %>% 
+  dplyr::group_by(start, end) %>% 
+  dplyr::summarise() %>% 
+  dplyr::ungroup()
+
+mt_maize_pasture_caledar %>% 
   plot()
 
