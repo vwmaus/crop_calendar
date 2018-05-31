@@ -137,8 +137,8 @@ sf::write_sf(mt_spatiotemporal_calendar, dsn = "./output/mt_spatiotemporal_calen
 
 # Plot starting months by crop type 
 gp <- mt_spatiotemporal_calendar %>% 
-  dplyr::mutate(group = stringr::str_c(month.abb[month_start], "-", month.abb[month_end])) %>% 
-  ggplot2::ggplot(aes(group = label, fill = group)) +
+  dplyr::mutate(Range = stringr::str_c(month.abb[month_start], "-", month.abb[month_end])) %>% 
+  ggplot2::ggplot(aes(group = label, fill = Range)) +
   ggplot2::facet_wrap(~label, nrow = 2) +
   ggplot2::geom_sf(size = 0.1) +
   ggplot2::theme(legend.position = "bottom")
@@ -146,5 +146,5 @@ gp <- mt_spatiotemporal_calendar %>%
 gp
 
 ggsave(filename = "./output/mt_spatiotemporal_calendar.png", plot = gp, device = "png", 
-       scale = 1, width = 8, height = 5, dpi = 300)
+       width = 15, height = 9, dpi = 300)
 
