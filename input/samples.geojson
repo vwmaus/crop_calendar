@@ -5,7 +5,7 @@
 "features": [
 { "type": "Feature", "properties": { "latitude": -13.384346, "longitude": -56.089848, "label": "maize", "year": 2015, "month": 7, "head": 97, "pit": -2 }, "geometry": { "type": "Point", "coordinates": [ -56.089848, -13.384346 ] } },
 { "type": "Feature", "properties": { "latitude": -16.913934, "longitude": -51.051451, "label": "soybean", "year": 2011, "month": 11, "head": 256, "pit": -6 }, "geometry": { "type": "Point", "coordinates": [ -51.051451, -16.913934 ] } },
-{ "type": "Feature", "properties": { "latitude": -17.02847, "longitude": -51097431.0, "label": "sugar-cane", "year": 2011, "month": 11, "head": 291, "pit": -4 }, "geometry": { "type": "Point", "coordinates": [ -51097431.0, -17.02847 ] } },
+{ "type": "Feature", "properties": { "latitude": -17.02847, "longitude": -51.097431, "label": "sugar-cane", "year": 2011, "month": 11, "head": 291, "pit": -4 }, "geometry": { "type": "Point", "coordinates": [ -51.097431, -17.02847 ] } },
 { "type": "Feature", "properties": { "latitude": -17.087947, "longitude": -51.122173, "label": "maize", "year": 2011, "month": 11, "head": 296, "pit": -13 }, "geometry": { "type": "Point", "coordinates": [ -51.122173, -17.087947 ] } },
 { "type": "Feature", "properties": { "latitude": -17.047947, "longitude": -51.107272, "label": "sugar-cane", "year": 2011, "month": 11, "head": 255, "pit": -11 }, "geometry": { "type": "Point", "coordinates": [ -51.107272, -17.047947 ] } },
 { "type": "Feature", "properties": { "latitude": -16.998022, "longitude": -51.084754, "label": "soybean", "year": 2011, "month": 11, "head": 281, "pit": -17 }, "geometry": { "type": "Point", "coordinates": [ -51.084754, -16.998022 ] } },
